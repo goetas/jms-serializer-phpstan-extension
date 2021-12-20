@@ -1,0 +1,7 @@
+services:
+    	-
+    		factory: App\SerializerDynamicReturnTypeExtension(\JMS\Serializer\SerializerInterface, deserialize)
+    		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+        -
+    		factory: App\SerializerDynamicReturnTypeExtension(\JMS\Serializer\ArrayTransformerInterface, deserialize)
+    		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]

@@ -1,0 +1,28 @@
+{
+    "name": "goetas/jms-serializer-phpstan-extension",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Goetas\\JmsSerializerPhpstanExtension\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Asmir Mustafic",
+            "email": "goetas@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "jms/serializer": "^3.0",
+        "phpstan/phpstan": "^1.0"
+    },
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
+    }
+}

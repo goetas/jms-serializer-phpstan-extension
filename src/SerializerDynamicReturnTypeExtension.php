@@ -2,17 +2,13 @@
 
 namespace Goetas\JmsSerializerPhpstanExtension;
 
-use JMS\Serializer\SerializerInterface;
-use JMS\Serializer\Type\Parser;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
 use PHPStan\Reflection\MethodReflection;
-use PHPStan\Type\ArrayType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\MixedType;
-use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
 class SerializerDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
@@ -51,32 +47,8 @@ class SerializerDynamicReturnTypeExtension implements DynamicMethodReturnTypeExt
             return new MixedType();
         }
 
-        $objectName = $argType->getValue();
+        $typeString = $argType->getValue();
 
-        return $this->getType($objectName);
-    }
-
-    private function getType(string $objectName): Type
-    {
-        $parser = new Parser();
-        return $this->getRealType($parser->parse($objectName));
-    }
-
-    private function getRealType(array $type): Type
-    {
-        if ($type['name'] === 'array') {
-            $keyType = new MixedType(false);
-            $valueType = new MixedType(false);
-            if (count($type['params']) === 1) {
-                $valueType = $this->getRealType($type['params'][0]);
-            } elseif (count($type['params']) === 2) {
-                $keyType = $this->getRealType($type['params'][0]);
-                $valueType = $this->getRealType($type['params'][1]);
-            }
-
-            return new ArrayType($keyType, $valueType);
-        } else {
-            return $this->typeStringResolver->resolve($type['name']);
-        }
+        return $this->typeStringResolver->resolve($typeString);
     }
 }

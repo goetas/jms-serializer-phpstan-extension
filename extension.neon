@@ -1,7 +1,8 @@
 services:
-    	-
-    		factory: App\SerializerDynamicReturnTypeExtension(\JMS\Serializer\SerializerInterface, deserialize)
-    		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
         -
-    		factory: App\SerializerDynamicReturnTypeExtension(\JMS\Serializer\ArrayTransformerInterface, deserialize)
-    		tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+            factory: Goetas\JmsSerializerPhpstanExtension\SerializerDynamicReturnTypeExtension(@PHPStan\PhpDoc\TypeStringResolver, JMS\Serializer\SerializerInterface, deserialize)
+            tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+
+        -
+            factory: Goetas\JmsSerializerPhpstanExtension\SerializerDynamicReturnTypeExtension(@PHPStan\PhpDoc\TypeStringResolver, JMS\Serializer\ArrayTransformerInterface, deserialize)
+            tags: [phpstan.broker.dynamicMethodReturnTypeExtension]

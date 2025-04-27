@@ -6,6 +6,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\PhpDoc\TypeStringResolver;
 use PHPStan\Reflection\MethodReflection;
+use PHPStan\Type\ClassStringType;
 use PHPStan\Type\Constant\ConstantStringType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\MixedType;
@@ -43,6 +44,11 @@ class SerializerDynamicReturnTypeExtension implements DynamicMethodReturnTypeExt
         }
 
         $argType = $scope->getType($methodCall->args[1]->value);
+
+        if ($argType instanceof ClassStringType) {
+            return $argType->getClassStringObjectType();
+        }
+
         if (!$argType instanceof ConstantStringType) {
             return new MixedType();
         }
